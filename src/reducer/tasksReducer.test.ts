@@ -1,4 +1,4 @@
-import {addTask, changeTaskStatus, clearCompletedTasks, tasksReducer} from './tasksReducer';
+import {addTask, changeTaskStatus, changeToDoListFilter, clearCompletedTasks, tasksReducer} from './tasksReducer';
 import {State} from "reducer/initialState";
 import {v1} from "uuid";
 
@@ -9,7 +9,8 @@ beforeEach(() => {
         tasks: {
             [initialRandomId]: {isDone: false, body: "Тестовое задание"}
         },
-        countCompletedTasks: 0
+        countCompletedTasks: 0,
+        filter:"all"
     };
 });
 
@@ -65,7 +66,8 @@ test('completed tasks should be cleared', () => {
                     "Очень приятно! :)"
             },
         },
-        countCompletedTasks: 0
+        countCompletedTasks: 0,
+        filter:"all"
     };
 
     const action = clearCompletedTasks()
@@ -80,3 +82,14 @@ test('completed tasks should be cleared', () => {
     expect(endState.tasks.hasOwnProperty(initialRandomId)).toBe(true);
 
 });
+
+test('filter should be changed', () => {
+
+    let intermediateState = tasksReducer(startState, changeToDoListFilter("active"))
+    const endState = tasksReducer(intermediateState, changeToDoListFilter("completed"));
+
+    expect(intermediateState.filter).toBe("active");
+    expect(endState.filter).toBe("completed");
+
+});
+
