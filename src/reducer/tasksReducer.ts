@@ -36,7 +36,7 @@ export const tasksReducer = (state: State, action: ReducerActions): State => {
                     [action.id]: {isDone: false, body: action.title},
                     ...state.tasks
                 },
-                countCompletedTasks: state.countCompletedTasks + 1
+                countTasksLeft: state.countTasksLeft + 1
             };
         }
         case "changeStatus": {
@@ -50,21 +50,25 @@ export const tasksReducer = (state: State, action: ReducerActions): State => {
                         isDone: !taskNeedToChange.isDone
                     },
                 },
-                countCompletedTasks: taskNeedToChange.isDone
-                    ? state.countCompletedTasks - 1
-                    : state.countCompletedTasks + 1
+                countTasksLeft: taskNeedToChange.isDone
+                    ? state.countTasksLeft + 1
+                    : state.countTasksLeft - 1
             };
         }
         case "clearCompletedTasks": {
+
+            let countWithIsDoneFalseTasks = 0;
+
             for (let id in state.tasks) {
-                if (state.tasks[id].isDone) {
-                    delete state.tasks[id];
-                }
+                state.tasks[id].isDone
+                    ? delete state.tasks[id]
+                    : countWithIsDoneFalseTasks++;
             }
+
             return {
                 ...state,
                 tasks: {...state.tasks},
-                countCompletedTasks: 0
+                countTasksLeft: countWithIsDoneFalseTasks
             };
         }
         case "changeFilter": {

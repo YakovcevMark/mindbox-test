@@ -9,8 +9,8 @@ beforeEach(() => {
         tasks: {
             [initialRandomId]: {isDone: false, body: "Тестовое задание"}
         },
-        countCompletedTasks: 0,
-        filter:"all"
+        countTasksLeft: 1,
+        filter:"All"
     };
 });
 
@@ -42,11 +42,11 @@ test("task should change it's status", () => {
 
     const intermediateState = tasksReducer(startState, action);
     expect(intermediateState.tasks[initialRandomId].isDone).toBe(true);
-    expect(intermediateState.countCompletedTasks).toBe(startState.countCompletedTasks + 1);
+    expect(intermediateState.countTasksLeft).toBe(startState.countTasksLeft - 1);
 
     const endState = tasksReducer(intermediateState, action);
     expect(endState.tasks[initialRandomId].isDone).toBe(false);
-    expect(endState.countCompletedTasks).toBe(intermediateState.countCompletedTasks - 1);
+    expect(endState.countTasksLeft).toBe(intermediateState.countTasksLeft + 1);
 
 });
 
@@ -66,8 +66,8 @@ test('completed tasks should be cleared', () => {
                     "Очень приятно! :)"
             },
         },
-        countCompletedTasks: 0,
-        filter:"all"
+        countTasksLeft: 1,
+        filter:"All"
     };
 
     const action = clearCompletedTasks()
@@ -80,13 +80,12 @@ test('completed tasks should be cleared', () => {
 
     expect(countOfTasks).toBe(1);
     expect(endState.tasks.hasOwnProperty(initialRandomId)).toBe(true);
-
 });
 
 test('filter should be changed', () => {
 
-    let intermediateState = tasksReducer(startState, changeToDoListFilter("active"))
-    const endState = tasksReducer(intermediateState, changeToDoListFilter("completed"));
+    let intermediateState = tasksReducer(startState, changeToDoListFilter("Active"))
+    const endState = tasksReducer(intermediateState, changeToDoListFilter("Completed"));
 
     expect(intermediateState.filter).toBe("active");
     expect(endState.filter).toBe("completed");

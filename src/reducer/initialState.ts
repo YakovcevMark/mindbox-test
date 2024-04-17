@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 
 export type Tasks = { [p: string]: { isDone: boolean, body: string } };
-export type Filter = "all" | "completed" | "active"
+export type Filter = "All" | "Completed" | "Active"
 export type State = typeof initialState;
 
 const initialTasks = {
@@ -12,8 +12,8 @@ const initialTasks = {
 
 export const initialState = {
     tasks: initialTasks,
-    countCompletedTasks: 0,
-    filter: "all" as Filter
+    countTasksLeft: 2,
+    filter: "All" as Filter
 };
 
 
