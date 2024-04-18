@@ -84,11 +84,15 @@ test('completed tasks should be cleared', () => {
 
 test('filter should be changed', () => {
 
-    let intermediateState = tasksReducer(startState, changeToDoListFilter("Active"))
-    const endState = tasksReducer(intermediateState, changeToDoListFilter("Completed"));
+    expect(startState.filter).toBe("All");
 
-    expect(intermediateState.filter).toBe("active");
-    expect(endState.filter).toBe("completed");
+    let stateWithActiveFilter = tasksReducer(startState, changeToDoListFilter("Active"))
+    let stateWithCompletedFilter = tasksReducer(stateWithActiveFilter, changeToDoListFilter("Completed"))
+    const endState = tasksReducer(stateWithCompletedFilter, changeToDoListFilter("All"));
+
+    expect(stateWithActiveFilter.filter).toBe("Active");
+    expect(stateWithCompletedFilter.filter).toBe("Completed");
+    expect(endState.filter).toBe("All");
 
 });
 
