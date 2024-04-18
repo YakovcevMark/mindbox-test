@@ -19,7 +19,10 @@ export const SDoneOutlinedIcon = styled(DoneOutlinedIcon)`
 export const SFormControlLabel = styled(FormControlLabel)`
     border-bottom: 1px solid rgba(128, 128, 128, 0.5);
     margin: 0;
- 
-    max-width: 480px;
-    word-break: break-word;
+
+    span {
+        max-width: 480px;
+        word-break: break-word;
+    }
+    
 `
