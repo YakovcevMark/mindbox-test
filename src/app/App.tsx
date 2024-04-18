@@ -1,20 +1,27 @@
-import React, {useReducer} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import {tasksReducer} from "reducer/tasksReducer";
 import {initialState} from "reducer/initialState";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {InputBlock} from "components/inputBlock/inputBlock";
 import {TasksBlock} from "components/tasksBlock/tasksBlock";
 import {ControlBlock} from "components/controlBlock/controlBlock";
-import {SAccordion, SAccordionDetails, SAccordionSummary, SBox, STypography} from "app/styles";
+import {SAccordion, SAccordionDetails, SAccordionSummary, SBox, SExpandMoreIcon, STypography} from "app/styles";
 
 export const App = () => {
 
-    const [{
+    const [state, dispatch] = useReducer(
+        tasksReducer,
+        initialState
+    );
+
+    const {
         tasks,
         filter,
         countTasksLeft
-    }, dispatch] = useReducer(tasksReducer, initialState);
+    } = state;
 
+    useEffect(() => {
+        localStorage.setItem("'myFantasticToken'state", JSON.stringify(state));
+    }, [state]);
 
     return (
         <SBox>
@@ -23,16 +30,16 @@ export const App = () => {
                 todos
             </STypography>
 
-            <SAccordion>
+            <SAccordion defaultExpanded>
 
                 <SAccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
+                    expandIcon={<SExpandMoreIcon/>}
                     aria-controls="panel1-header"
                     id="panel1-header"
                 >
 
-                 <InputBlock
-                     dispatch={dispatch}/>
+                    <InputBlock
+                        dispatch={dispatch}/>
 
                 </SAccordionSummary>
 
@@ -40,7 +47,7 @@ export const App = () => {
 
                     <TasksBlock
                         dispatch={dispatch}
-                        stateTasks={tasks}
+                        tasks={tasks}
                         filter={filter}/>
 
                     <ControlBlock
