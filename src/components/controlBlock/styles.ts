@@ -1,10 +1,9 @@
 import {styled} from "@mui/material/styles";
-import {Button, Grid, Typography,} from "@mui/material";
+import {Button, Typography,} from "@mui/material";
 export const EButton = styled(Button)`
     justify-self: end;
 `
-export const CGrid = styled(Grid)``
-export const SConrtolBlock = styled("section")`
+export const SControlBlock = styled("section")`
     button {
         color: black;
         font-size: 0.6rem;

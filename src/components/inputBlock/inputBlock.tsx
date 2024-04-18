@@ -1,6 +1,6 @@
 import React, {KeyboardEvent, Dispatch, memo, MouseEvent, useState, ChangeEvent} from "react";
 import {addTask, ReducerActions} from "reducer/tasksReducer";
-import {SInput} from "components/inputBlock/styles";
+import {SError, SInput, SInputBlock} from "components/inputBlock/styles";
 
 type PT = {
     dispatch: Dispatch<ReducerActions>
@@ -8,29 +8,38 @@ type PT = {
 export const InputBlock = memo(
     ({dispatch}: PT) => {
         const [title, setTitle] = useState("");
+        const [error, setError] = useState("");
         const handleOnKeyUp = (e:KeyboardEvent<HTMLInputElement>) => {
             if (e.key === `Enter`){
-                dispatch(addTask(title));
-                setTitle("");
+                if(title.trim()){
+                    dispatch(addTask(title));
+                    setTitle("");
+                } else {
+                    setError("task can't be empty")
+                }
             }
         };
         const handleOnChange = (e:ChangeEvent<HTMLInputElement>) => {
             setTitle(e.currentTarget.value)
+            error && setError("")
         };
         const handleOnClick = (e:MouseEvent<HTMLDivElement>) => {
-                e.stopPropagation();
+            e.stopPropagation();
         };
 
         return (
-            <SInput
-                placeholder={"What needs to be done?"}
-                fullWidth
-                onKeyUp={handleOnKeyUp}
-                onClick={handleOnClick}
-                onChange={handleOnChange}
-                value={title}
-                disableUnderline
+            <SInputBlock>
+                <SInput
+                    placeholder={"What needs to be done?"}
+                    fullWidth
+                    onKeyUp={handleOnKeyUp}
+                    onClick={handleOnClick}
+                    onChange={handleOnChange}
+                    value={title}
+                    disableUnderline
                 />
+                {error && <SError>{error}</SError>}
+            </SInputBlock>
         )
     }
 );

@@ -1,15 +1,14 @@
 import {styled} from "@mui/material/styles";
 import {Accordion, AccordionDetails, AccordionSummary, Box, Typography} from "@mui/material";
-
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+export const SExpandMoreIcon = styled(ExpandMoreIcon)`
+    rotate:180deg;
+`
 export const SAccordionSummary = styled(AccordionSummary)`
     flex-direction: row-reverse;
     
     svg {
         opacity: 0.7;
-    }
-
-    input {
-        padding-left: 5px;
     }
 
     border-bottom: 1px solid rgba(0, 0, 0, 0.38);
@@ -37,8 +36,7 @@ export const STypography = styled(Typography)`
 `
 export const SAccordionDetails = styled(AccordionDetails)`
     padding: 0;
-
-
+    
     &::after, ::before {
         content: "";
         background-color: rgba(250, 250, 250);

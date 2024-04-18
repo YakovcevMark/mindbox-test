@@ -3,7 +3,7 @@ import React, {Dispatch, memo, useCallback} from "react";
 import {changeToDoListFilter, clearCompletedTasks, ReducerActions} from "reducer/tasksReducer";
 import {Filter} from "reducer/initialState";
 import Grid from '@mui/material/Unstable_Grid2';
-import {EButton, SConrtolBlock, STypography} from "components/controlBlock/styles";
+import {EButton, SControlBlock, STypography} from "components/controlBlock/styles";
 
 type PT = {
     dispatch: Dispatch<ReducerActions>,
@@ -31,7 +31,7 @@ export const ControlBlock = memo(
         );
 
         return (
-            <SConrtolBlock>
+            <SControlBlock>
                 <STypography>
                      {countTasksLeft} items left
                 </STypography>
@@ -56,7 +56,7 @@ export const ControlBlock = memo(
                     disableRipple>
                     Clear completed
                 </EButton>
-            </SConrtolBlock>
+            </SControlBlock>
         );
     }
 );

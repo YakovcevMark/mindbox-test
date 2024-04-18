@@ -14,10 +14,12 @@ export const SCheckbox = styled(Checkbox)`
     }
 `
 export const SDoneOutlinedIcon = styled(DoneOutlinedIcon)`
-    color: rgba(112, 243, 112, 0.8);
+    color: rgb(115, 190, 172);
 `
 export const SFormControlLabel = styled(FormControlLabel)`
     border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-    width: 100%;
     margin: 0;
+ 
+    max-width: 480px;
+    word-break: break-word;
 `

@@ -6,61 +6,52 @@ import {changeTaskStatus, ReducerActions} from "reducer/tasksReducer";
 
 
 type PT = {
-    stateTasks: Tasks,
+    tasks: Tasks,
     filter: Filter,
     dispatch: Dispatch<ReducerActions>
 };
 
 export const TasksBlock = memo(
-    ({stateTasks, filter, dispatch}: PT) => {
+    ({tasks, filter, dispatch}: PT) => {
 
-        const arrayTasks = useMemo(() => {
+        const filteredIds = useMemo(() => {
 
-            const tasksToArray = [];
-
-            for (let id in stateTasks)
-                tasksToArray.push({id, ...stateTasks[id]});
-
-            return tasksToArray;
-
-        }, [stateTasks]);
-
-
-        const filteredTasks = useMemo(() => {
+            const getKeys = Object.keys;
 
             if (filter === 'Active')
-                return arrayTasks.filter(t => !t.isDone);
+                return getKeys(tasks).filter(id => !tasks[id].isDone);
 
             if (filter === 'Completed')
-                return arrayTasks.filter(t => t.isDone);
+                return getKeys(tasks).filter(id => tasks[id].isDone);
 
-            return arrayTasks;
+            return getKeys(tasks);
 
-        }, [filter, arrayTasks])
+        }, [filter, tasks])
 
         const onHandleChangeTaskStats = useCallback(
             (id: string) =>
                 () => dispatch(changeTaskStatus(id)),
             [dispatch]
         );
+
         return (
             <FormGroup>
 
-                {filteredTasks.map(t => (
+                {filteredIds.map(id => (
                     <SFormControlLabel
-                        key={t.id}
+                        key={id}
                         control={
                             <SCheckbox
-                                onClick={onHandleChangeTaskStats(t.id)}
+                                onClick={onHandleChangeTaskStats(id)}
                                 icon={<svg/>}
                                 checkedIcon={<SDoneOutlinedIcon/>}
-                                checked={t.isDone}
+                                checked={tasks[id].isDone}
                             />}
-                        label={t.isDone
+                        label={tasks[id].isDone
                             ? <SDel>
-                                {t.body}
+                                {tasks[id].body}
                             </SDel>
-                            : t.body}
+                            : tasks[id].body}
                     />
 
                 ))}
